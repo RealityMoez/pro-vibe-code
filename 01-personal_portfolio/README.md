@@ -3,7 +3,7 @@
 Create a portfolio.
 cyperpunk-style.
 squared design.
-simple, intriguing, interactive transitions.
+simple, intriuging, interactive transitions.
 performant.
 
 Implement directly, no room for questions.
