@@ -5,6 +5,7 @@ Continuous prompting and development through Cursor IDE
 # MODEL
 Cursor `claude-3.5-sonnet`
 
+---
 To run the devserver:
 
 ```bash
