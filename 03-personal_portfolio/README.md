@@ -1,5 +1,3 @@
-# [Demo](https://03pp.vercel.app/)
-
 *Last developed on* `2024-05-05`.
 ## PROMPT
 ```
