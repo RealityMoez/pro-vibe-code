@@ -303,3 +303,308 @@
     <script src="script.js"></script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>John Doe | Cyberpunk Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="noise"></div>
+    <div class="grid-container">
+        <header class="header">
+            <div class="logo">John<span class="accent">Doe</span></div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="#about" class="nav-link" data-section="about">ABOUT</a></li>
+                    <li><a href="#projects" class="nav-link" data-section="projects">PROJECTS</a></li>
+                    <li><a href="#skills" class="nav-link" data-section="skills">SKILLS</a></li>
+                    <li><a href="#contact" class="nav-link" data-section="contact">CONTACT</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main class="content">
+            <section id="hero" class="section hero active">
+                <div class="glitch-container">
+                    <h1 class="glitch" data-text="CYBER DEVELOPER">CYBER DEVELOPER</h1>
+                </div>
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <span class="terminal-button"></span>
+                        <span class="terminal-button"></span>
+                        <span class="terminal-button"></span>
+                        <div class="terminal-title">terminal@john-doe:~</div>
+                    </div>
+                    <div class="terminal-content">
+                        <div class="terminal-line">$ <span class="typing-text">initializing system...</span></div>
+                        <div class="terminal-line">$ <span class="typing-text">loading portfolio data...</span></div>
+                        <div class="terminal-line">$ <span class="typing-text">Hello, I'm a fullstack developer specialized in cybernetic solutions.</span></div>
+                        <div class="terminal-line">$ <span class="typing-text">Navigate my portfolio to discover my projects and skills.</span></div>
+                        <div class="terminal-line blink">$ <span class="cursor">█</span></div>
+                    </div>
+                </div>
+                <div class="cta-container">
+                    <button class="cta-button" onclick="scrollToSection('projects')">VIEW PROJECTS</button>
+                    <button class="cta-button" onclick="scrollToSection('contact')">CONNECT</button>
+                </div>
+            </section>
+
+            <section id="about" class="section about">
+                <div class="section-header">
+                    <h2><span class="bracket">[</span> ABOUT <span class="bracket">]</span></h2>
+                    <div class="decoration-line"></div>
+                </div>
+                <div class="about-content">
+                    <div class="about-image">
+                        <div class="image-frame">
+                            <div class="image-container">
+                                <div class="hex-image"></div>
+                            </div>
+                            <div class="frame-corner top-left"></div>
+                            <div class="frame-corner top-right"></div>
+                            <div class="frame-corner bottom-left"></div>
+                            <div class="frame-corner bottom-right"></div>
+                        </div>
+                    </div>
+                    <div class="about-text">
+                        <p class="glitch-text">I'm a digital architect operating at the intersection of code and creativity.</p>
+                        <p>With over 5 years of experience in crafting immersive digital experiences, I specialize in building high-performance applications with cutting-edge technologies.</p>
+                        <p>My passion lies in creating clean, efficient code that pushes the boundaries of what's possible in the digital realm.</p>
+                        <div class="stats-grid">
+                            <div class="stat">
+                                <div class="stat-number">5+</div>
+                                <div class="stat-label">YEARS XP</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">50+</div>
+                                <div class="stat-label">PROJECTS</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">3</div>
+                                <div class="stat-label">SPECIALTIES</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="projects" class="section projects">
+                <div class="section-header">
+                    <h2><span class="bracket">[</span> PROJECTS <span class="bracket">]</span></h2>
+                    <div class="decoration-line"></div>
+                </div>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-image" style="--bg-image: url('https://source.unsplash.com/random/600x400?tech')">
+                            <div class="project-overlay">
+                                <h3>NeoTech Dashboard</h3>
+                                <p>A cyberpunk-inspired admin dashboard with real-time data visualization</p>
+                                <div class="project-tags">
+                                    <span>React</span>
+                                    <span>D3.js</span>
+                                    <span>Firebase</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-image" style="--bg-image: url('https://source.unsplash.com/random/600x400?cyberpunk')">
+                            <div class="project-overlay">
+                                <h3>Quantum Cipher</h3>
+                                <p>Encryption system with biometric authentication and neural interfaces</p>
+                                <div class="project-tags">
+                                    <span>Python</span>
+                                    <span>TensorFlow</span>
+                                    <span>Blockchain</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-image" style="--bg-image: url('https://source.unsplash.com/random/600x400?future')">
+                            <div class="project-overlay">
+                                <h3>SynthCity</h3>
+                                <p>Interactive 3D city simulation with procedurally generated environments</p>
+                                <div class="project-tags">
+                                    <span>Three.js</span>
+                                    <span>WebGL</span>
+                                    <span>Node.js</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-image" style="--bg-image: url('https://source.unsplash.com/random/600x400?digital')">
+                            <div class="project-overlay">
+                                <h3>Neural Link</h3>
+                                <p>Brain-computer interface prototype for augmented reality applications</p>
+                                <div class="project-tags">
+                                    <span>C++</span>
+                                    <span>CUDA</span>
+                                    <span>Unity3D</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="view-more">
+                    <button class="more-button">VIEW ALL PROJECTS <span class="arrow">→</span></button>
+                </div>
+            </section>
+
+            <section id="skills" class="section skills">
+                <div class="section-header">
+                    <h2><span class="bracket">[</span> SKILLS <span class="bracket">]</span></h2>
+                    <div class="decoration-line"></div>
+                </div>
+                <div class="skills-container">
+                    <div class="skill-category">
+                        <h3 class="category-title">FRONTEND</h3>
+                        <div class="skill-grid">
+                            <div class="skill-item" data-skill="React">
+                                <div class="skill-level" style="--level: 90%"></div>
+                                <div class="skill-name">React</div>
+                                <div class="skill-percent">90%</div>
+                            </div>
+                            <div class="skill-item" data-skill="Vue.js">
+                                <div class="skill-level" style="--level: 85%"></div>
+                                <div class="skill-name">Vue.js</div>
+                                <div class="skill-percent">85%</div>
+                            </div>
+                            <div class="skill-item" data-skill="Three.js">
+                                <div class="skill-level" style="--level: 75%"></div>
+                                <div class="skill-name">Three.js</div>
+                                <div class="skill-percent">75%</div>
+                            </div>
+                            <div class="skill-item" data-skill="WebGL">
+                                <div class="skill-level" style="--level: 70%"></div>
+                                <div class="skill-name">WebGL</div>
+                                <div class="skill-percent">70%</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3 class="category-title">BACKEND</h3>
+                        <div class="skill-grid">
+                            <div class="skill-item" data-skill="Node.js">
+                                <div class="skill-level" style="--level: 85%"></div>
+                                <div class="skill-name">Node.js</div>
+                                <div class="skill-percent">85%</div>
+                            </div>
+                            <div class="skill-item" data-skill="Python">
+                                <div class="skill-level" style="--level: 80%"></div>
+                                <div class="skill-name">Python</div>
+                                <div class="skill-percent">80%</div>
+                            </div>
+                            <div class="skill-item" data-skill="GraphQL">
+                                <div class="skill-level" style="--level: 75%"></div>
+                                <div class="skill-name">GraphQL</div>
+                                <div class="skill-percent">75%</div>
+                            </div>
+                            <div class="skill-item" data-skill="Docker">
+                                <div class="skill-level" style="--level: 70%"></div>
+                                <div class="skill-name">Docker</div>
+                                <div class="skill-percent">70%</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3 class="category-title">OTHER</h3>
+                        <div class="skill-grid">
+                            <div class="skill-item" data-skill="AI/ML">
+                                <div class="skill-level" style="--level: 65%"></div>
+                                <div class="skill-name">AI/ML</div>
+                                <div class="skill-percent">65%</div>
+                            </div>
+                            <div class="skill-item" data-skill="AR/VR">
+                                <div class="skill-level" style="--level: 60%"></div>
+                                <div class="skill-name">AR/VR</div>
+                                <div class="skill-percent">60%</div>
+                            </div>
+                            <div class="skill-item" data-skill="Blockchain">
+                                <div class="skill-level" style="--level: 55%"></div>
+                                <div class="skill-name">Blockchain</div>
+                                <div class="skill-percent">55%</div>
+                            </div>
+                            <div class="skill-item" data-skill="IoT">
+                                <div class="skill-level" style="--level: 50%"></div>
+                                <div class="skill-name">IoT</div>
+                                <div class="skill-percent">50%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="contact" class="section contact">
+                <div class="section-header">
+                    <h2><span class="bracket">[</span> CONTACT <span class="bracket">]</span></h2>
+                    <div class="decoration-line"></div>
+                </div>
+                <div class="contact-container">
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-icon">@</div>
+                            <div class="contact-detail">johndoe@cyber.net</div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">#</div>
+                            <div class="contact-detail">+1 (101) 010-1010</div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">∙</div>
+                            <div class="contact-detail">Night City, Sector 101</div>
+                        </div>
+                        <div class="social-links">
+                            <a href="#" class="social-link">GH</a>
+                            <a href="#" class="social-link">TW</a>
+                            <a href="#" class="social-link">LN</a>
+                            <a href="#" class="social-link">IG</a>
+                        </div>
+                    </div>
+                    <div class="contact-form">
+                        <div class="form-group">
+                            <input type="text" id="name" class="form-input" placeholder=" " required>
+                            <label for="name" class="form-label">NAME</label>
+                            <div class="input-border"></div>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" class="form-input" placeholder=" " required>
+                            <label for="email" class="form-label">EMAIL</label>
+                            <div class="input-border"></div>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" class="form-input form-textarea" placeholder=" " required></textarea>
+                            <label for="message" class="form-label">MESSAGE</label>
+                            <div class="input-border"></div>
+                        </div>
+                        <button type="submit" class="submit-button">
+                            TRANSMIT <span class="button-icon">→</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-logo">JD</div>
+                <div class="footer-copyright">© 2025 John Doe | All systems operational</div>
+            </div>
+            <div class="footer-decoration">
+                <div class="footer-line"></div>
+                <div class="footer-dot"></div>
+                <div class="footer-line"></div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
