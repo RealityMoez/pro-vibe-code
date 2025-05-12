@@ -1,16 +1,16 @@
 # [Demo](https://01pp.vercel.app)
 
 *Last developed on* `2025-10`.
-# PROMPT
+## PROMPT
 (Continuous prompting and development through Cursor IDE)
 
-# MODEL
+## MODEL
 Cursor `claude-3.5-sonnet`
 
 ---
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+### Getting Started
 
 First, run the development server:
 
