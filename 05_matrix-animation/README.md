@@ -1,5 +1,5 @@
 *Last developed on* `2025-05-13`.
-# [Demo](https://fallingletters.pages.dev/)
+# [Demo](https://05ma.pages.dev/)
 
 ## [Prompt](https://github.com/RealityMoez/pl/blob/main/001.md)
 
