@@ -1,15 +1,5 @@
 *Last developed on* `2024-05-05`.
-## PROMPT
-```
-Create a portfolio.
-cyperpunk-style.
-squared design.
-simple, intriuging, interactive transitions.
-performant.
+## [Prompt](https://github.com/RealityMoez/pl/blob/main/005.md)
 
-Implement directly, no room for questions.
-mock data.
-```
-
-## MODEL
+## Model
 Github Site's Github Copilot Chat `Claude-3.7-sonnet` model
