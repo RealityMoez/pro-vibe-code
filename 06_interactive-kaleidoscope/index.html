@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P5.js Kaleidoscope</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.js"></script>
+    <style>
+        /* Basic styling to make the canvas full screen and remove scrollbars */
+        body {
+            margin: 0;
+            overflow: hidden; /* Hide scrollbars */
+            background-color: #000000; /* Black background for the page */
+            font-family: sans-serif; /* Basic font for any text elements */
+        }
+        canvas {
+            display: block; /* Prevents extra space below canvas */
+        }
+        /* Simple message box styling */
+        .message-box {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #333;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            pointer-events: none; /* Allow clicks to pass through */
+        }
+        .message-box.visible {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div id="messageBox" class="message-box"></div>
+
+    <script>
+        // p5.js sketch code
+
+        let symmetry = 6; // Number of symmetrical slices (e.g., 6 for a hexagon-like base)
+        let angle;      // Angle between slices
+
+        // Color settings using HSB (Hue, Saturation, Brightness)
+        let hueValue = 0;
+
+        // Variables for message display
+        let messageDiv;
+        let messageTimeout;
+
+        // Setup function: runs once when the program starts
+        function setup() {
+            createCanvas(windowWidth, windowHeight); // Create a canvas that fills the browser window
+            angleMode(RADIANS); // Use radians for angles (TWO_PI is a full circle)
+            background(0);      // Set initial background to black
+            strokeCap(ROUND);   // Make line endings rounded for a smoother look
+
+            angle = TWO_PI / symmetry; // Calculate the angle for each slice
+
+            // Initialize color mode for HSB
+            // Max values: Hue 360, Saturation 100, Brightness 100, Alpha 100
+            colorMode(HSB, 360, 100, 100, 100);
+
+            // Get the message div
+            messageDiv = document.getElementById('messageBox');
+            showMessage("Move mouse to draw. Space: change symmetry. C: clear. S: save.", 5000);
+        }
+
+        // Draw function: runs continuously in a loop
+        function draw() {
+            // Translate the origin to the center of the canvas
+            // All drawing will be relative to this central point
+            translate(width / 2, height / 2);
+
+            // Check if the mouse has moved significantly to draw
+            // This prevents drawing static dots if the mouse is still
+            if (dist(mouseX, mouseY, pmouseX, pmouseY) > 0.5) {
+
+                // Get mouse coordinates relative to the new center origin
+                let mx = mouseX - width / 2;
+                let my = mouseY - height / 2;
+                let pmx = pmouseX - width / 2;
+                let pmy = pmouseY - height / 2;
+
+                // Calculate mouse speed (distance moved since last frame)
+                let speed = dist(mouseX, mouseY, pmouseX, pmouseY);
+
+                // Map mouse speed to stroke weight (line thickness)
+                // Faster movement = thicker lines
+                let sw = map(speed, 0, 25, 1, 12); // Min weight 1, max 12
+                sw = constrain(sw, 1, 12); // Ensure stroke weight stays within bounds
+                strokeWeight(sw);
+
+                // --- Dynamic Color Calculation ---
+                // Map mouse X position to Hue (0-360 degrees)
+                hueValue = map(mx, -width / 2, width / 2, 0, 360);
+                hueValue = (hueValue + frameCount * 0.1) % 360; // Add a slow cyclic shift to hue
+
+                // Map mouse Y position to Saturation (50-100%)
+                let saturation = map(my, -height / 2, height / 2, 60, 100);
+                saturation = constrain(saturation, 60, 100);
+
+                // Keep Brightness high for vibrant colors
+                let brightness = 95;
+
+                // Map mouse speed to Alpha (transparency)
+                // Faster strokes are slightly more opaque
+                let alphaValue = map(speed, 0, 30, 40, 90); // Alpha from 40% to 90%
+                alphaValue = constrain(alphaValue, 40, 90);
+
+                // Set the stroke color with calculated HSB and Alpha values
+                stroke(hueValue, saturation, brightness, alphaValue);
+
+                // Loop to draw in all symmetrical segments
+                for (let i = 0; i < symmetry; i++) {
+                    rotate(angle); // Rotate the coordinate system for the next segment
+
+                    // Draw the primary line based on mouse movement
+                    // from previous mouse position (pmx, pmy) to current (mx, my)
+                    line(mx, my, pmx, pmy);
+
+                    // Create a reflection within the segment for more intricate patterns
+                    push();       // Save current drawing state (transformations)
+                    scale(1, -1); // Reflect vertically (across the segment's X-axis)
+                    line(mx, my, pmx, pmy); // Draw the reflected line
+                    pop();        // Restore previous drawing state
+                }
+            }
+        }
+
+        // Function to display a message on screen
+        function showMessage(text, duration = 3000) {
+            if (messageDiv) {
+                messageDiv.textContent = text;
+                messageDiv.classList.add('visible');
+                clearTimeout(messageTimeout); // Clear any existing timeout
+                messageTimeout = setTimeout(() => {
+                    messageDiv.classList.remove('visible');
+                }, duration);
+            } else {
+                console.log("Message Box not found. Message: " + text);
+            }
+        }
+
+        // Handle window resizing
+        function windowResized() {
+            resizeCanvas(windowWidth, windowHeight); // Adjust canvas size
+            background(0); // Clear background on resize to prevent distorted patterns
+            colorMode(HSB, 360, 100, 100, 100); // Re-apply color mode
+            angle = TWO_PI / symmetry; // Recalculate angle if symmetry changed before resize
+            showMessage("Canvas resized. Settings reset.", 2000);
+        }
+
+        // Handle key presses for extra functionality
+        function keyPressed() {
+            if (key === 's' || key === 'S') {
+                // Save the current canvas as a PNG image
+                saveCanvas('kaleidoscope_pattern', 'png');
+                showMessage("Pattern saved!", 2000);
+            }
+            if (key === 'c' || key === 'C') {
+                // Clear the canvas by redrawing the background
+                background(0);
+                showMessage("Canvas cleared!", 2000);
+            }
+            if (key === ' ') { // Spacebar
+                // Cycle through symmetry values: 4, 6, 8, 10, 12
+                if (symmetry === 12) {
+                    symmetry = 4;
+                } else {
+                    symmetry += 2;
+                }
+                angle = TWO_PI / symmetry; // Update angle for new symmetry
+                background(0); // Clear canvas when symmetry changes
+                showMessage("Symmetry set to " + symmetry + " slices", 2000);
+            }
+        }
+    </script>
+</body>
+</html>
