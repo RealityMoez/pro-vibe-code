@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Matrix Rain</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000;
+            overflow: hidden;
+            cursor: crosshair;
+        }
+
+        canvas {
+            display: block;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        #hint {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+            font-size: 24px;
+            text-shadow: 0 0 10px #0f0, 0 0 20px #0f0;
+            opacity: 0.8;
+            transition: opacity 1s ease-out;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        #hint.fade-out {
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="matrix"></canvas>
+    <div id="hint">Try to hold...</div>
+
+    <script>
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+        const hint = document.getElementById('hint');
+
+        // Matrix characters - mix of katakana and other symbols
+        const matrixChars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789';
+        const chars = matrixChars.split('');
+
+        let fontSize = 16;
+        let columns = 0;
+        let drops = [];
+        let mouseX = -1;
+        let mouseY = -1;
+        let isHolding = false;
+        let hasInteracted = false;
+        let globalSpeed = 1;
+        let targetSpeed = 1;
+
+        // Column properties for enhanced effects
+        let columnProperties = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            columns = Math.floor(canvas.width / fontSize);
+            
+            // Initialize or resize drops array
+            if (drops.length !== columns) {
+                drops = new Array(columns).fill(0);
+                columnProperties = new Array(columns).fill(null).map(() => ({
+                    brightness: 1,
+                    targetBrightness: 1,
+                    glow: 0,
+                    targetGlow: 0
+                }));
+            }
+        }
+
+        function getColumnFromX(x) {
+            return Math.floor(x / fontSize);
+        }
+
+        function draw() {
+            // Create trailing effect
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Smooth speed transition
+            globalSpeed += (targetSpeed - globalSpeed) * 0.1;
+
+            const hoveredColumn = getColumnFromX(mouseX);
+
+            for (let i = 0; i < drops.length; i++) {
+                // Update column properties with smooth transitions
+                const prop = columnProperties[i];
+                prop.brightness += (prop.targetBrightness - prop.brightness) * 0.15;
+                prop.glow += (prop.targetGlow - prop.glow) * 0.15;
+
+                // Determine column state
+                if (i === hoveredColumn && mouseX >= 0) {
+                    prop.targetBrightness = isHolding ? 3 : 2;
+                    prop.targetGlow = isHolding ? 1 : 0.5;
+                } else {
+                    prop.targetBrightness = isHolding ? 0.3 : 1;
+                    prop.targetGlow = 0;
+                }
+
+                // Random character
+                const char = chars[Math.floor(Math.random() * chars.length)];
+                
+                // Calculate position
+                const x = i * fontSize;
+                const y = drops[i] * fontSize;
+
+                // Set color and effects based on column state
+                const baseBrightness = 100 * prop.brightness;
+                const green = Math.min(255, baseBrightness);
+                const blue = prop.glow * 100;
+                
+                ctx.fillStyle = `rgb(0, ${green}, ${blue})`;
+                ctx.font = `${fontSize}px monospace`;
+
+                // Add glow effect for highlighted columns
+                if (prop.glow > 0.1) {
+                    ctx.shadowBlur = 20 * prop.glow;
+                    ctx.shadowColor = `rgba(0, 255, ${blue}, ${prop.glow})`;
+                } else {
+                    ctx.shadowBlur = 0;
+                }
+
+                ctx.fillText(char, x, y);
+
+                // Trail effect for recent characters
+                if (y > fontSize) {
+                    ctx.fillStyle = `rgba(0, ${green * 0.7}, ${blue * 0.7}, 0.7)`;
+                    ctx.fillText(chars[Math.floor(Math.random() * chars.length)], x, y - fontSize);
+                }
+
+                // Move drops with variable speed
+                const columnSpeed = isHolding && i !== hoveredColumn ? 0.1 : 1;
+                if (y > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i] += globalSpeed * columnSpeed * 0.5;
+            }
+
+            requestAnimationFrame(draw);
+        }
+
+        // Mouse events
+        canvas.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+            mouseX = -1;
+            mouseY = -1;
+        });
+
+        canvas.addEventListener('mousedown', () => {
+            isHolding = true;
+            targetSpeed = 0.2;
+            
+            if (!hasInteracted) {
+                hasInteracted = true;
+                hint.classList.add('fade-out');
+                setTimeout(() => {
+                    hint.style.display = 'none';
+                }, 1000);
+            }
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            isHolding = false;
+            targetSpeed = 1;
+        });
+
+        // Handle mouse leaving window while holding
+        document.addEventListener('mouseup', () => {
+            isHolding = false;
+            targetSpeed = 1;
+        });
+
+        // Window resize
+        window.addEventListener('resize', resizeCanvas);
+
+        // Initialize
+        resizeCanvas();
+        draw();
+
+        // Hide hint after 5 seconds if no interaction
+        setTimeout(() => {
+            if (!hasInteracted) {
+                hint.style.opacity = '0.5';
+            }
+        }, 5000);
+    </script>
+</body>
+</html>
