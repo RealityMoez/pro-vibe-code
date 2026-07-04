@@ -1,4 +1,7 @@
-*Last developed on* `2026-06-28`.
+*Last developed on* `2026-06-28`.  
+# [Demo](https://08pp.pages.dev/)
+
+
 ## [Prompt](https://github.com/RealityMoez/pl/blob/main/005.md)
 
 ## Model
